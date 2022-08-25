@@ -1,0 +1,25 @@
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    font-size: 35px;
+}
+
+.choices-container{
+    margin-top: 50vh;
+}
+.results-container,
+.choices-container {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.results-container {
+    margin-top: 20px;
+    flex-direction: column;
+    text-align: left;
+}

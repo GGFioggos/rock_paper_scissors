@@ -1,3 +1,17 @@
+const result = document.querySelector("#result");
+const score = document.querySelector("#score");
+const btns = document.querySelectorAll("button");
+
+let playerscore = 0;
+let computerscore = 0;
+
+btns.forEach(btn => btn.addEventListener("click", () => {
+    game(btn.getAttribute("data-key"));
+}))
+
+
+
+
 function randomNumber(min,max){
     return Math.floor(Math.random() * (max - min) + min);
 }
@@ -19,9 +33,8 @@ function getPlayerSelection() {
     return playerselection.toLowerCase();
 }
 
-function playRound() {
+function playRound(playerselection) {
     // 0 == PLAYER WINS 1 == COMPUTER WINS 2 == DRAW
-    let playerselection = getPlayerSelection();
     let computerselection = getComputerChoice();
     if (playerselection == "rock" && computerselection == "paper"){
         return 1;
@@ -44,23 +57,33 @@ function playRound() {
     }
 }
 
-function game() {
-    let playerscore = 0;
-    let computercore = 0;
+function game(playerselection) {
 
-    for (let i=0 ; i<5 ; i++) {
-        let winner = playRound();
-        if (winner == 1) {
-            console.log("Computer Wins!");
-            computercore ++;
-        }else if (winner == 0 ){
-            console.log("Player Wins!");
-            playerscore ++;
-        }else if (winner == 2){
-            console.log("Draw!");
-        }
+    
+    let winner = playRound(playerselection);
+    if (winner == 1) {
+        result.textContent = "Result: Computer Wins Round";
+        computerscore ++;
+    }else if (winner == 0 ){
+        result.textContent = "Result: Player Wins Round";
+        playerscore ++;
+    }else{
+        result.textContent = "Result: It's a Draw!";
     }
-    console.log("Total Score: Player: " + playerscore + "\nComputer: " + computercore);
+    score.textContent = "Score: Player: " + playerscore + " Computer: " + computerscore;
+        
+
+    if (playerscore == 5){
+        result.textContent = "Result: Player Wins!";
+        gameover();
+    }else if (computerscore == 5){
+        result.textContent = "Result: Computer Wins!";
+        gameover();
+    }
 }
 
-game();
+function gameover(){
+    btns.forEach(btn => {
+        btn.disabled = true;
+    })
+}
